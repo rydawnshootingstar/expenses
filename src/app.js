@@ -12,15 +12,11 @@ import getVisibleExpenses from './selectors/expenses';
 
 const store = configureStore();
 
-store.subscribe(()=> {
-    const state = store.getState();
-    const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
-    console.log(visibleExpenses);
-});
-
-const expenseOne = store.dispatch(addExpense({description:'water bill', amount: 10000, createdAt: 1000}));
-const expenseTwo = store.dispatch(addExpense({description:'gas bill', amount: 3000, createdAt: 500000}));
-const expenseThree = store.dispatch(addExpense({description:'rent', amount: 50000, createdAt: 7700}));
+// store.subscribe(()=> {
+//     const state = store.getState();
+//     const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+//     console.log(visibleExpenses);
+// });
 
 var appRoot = document.getElementById('words');
 
@@ -31,7 +27,6 @@ const jsx = (
     </Provider>
 );
 
-//then we render it
 const renderApp = ()=> {
     ReactDOM.render(jsx, appRoot);
 };

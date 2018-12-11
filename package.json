@@ -6,8 +6,9 @@
   "private": true,
   "scripts": {
     "serve": "live-server public/",
-    "build": "webpack",
+    "build:dev": "webpack",
     "dev-server": "webpack-dev-server",
+    "build:prod": "webpack -p --env production",
     "build-babel": "babel ./src/app.js --out-file=public/scripts/app.js --presets=react --watch",
     "test": "jest --config=jest.config.json"
   },
@@ -46,6 +47,8 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "enzyme-to-json": "^3.3.5",
+    "live-server": "^1.2.1",
+    "mini-css-extract-plugin": "^0.5.0",
     "raf": "^3.4.1"
   }
 }

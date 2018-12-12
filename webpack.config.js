@@ -1,22 +1,12 @@
 const path = require('path');
-// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CSSExtract = new ExtractTextPlugin('styles.css');
 
 module.exports = (env)=> {
     const isProduction = env === 'production';
 
     return {
-        // optimization: {
-        //     splitChunks: {
-        //       cacheGroups: {
-        //         styles: {
-        //           name: 'styles',
-        //           test: /\.s?css$/,
-        //           chunks: 'all',
-        //           enforce: true
-        //         }
-        //       }
-        //     }
-        //   },
+
         entry: './src/app.js',
     output: {
         path: path.join(__dirname,'public'),
@@ -31,9 +21,10 @@ module.exports = (env)=> {
             exclude: /node_modules/
         }, {
             test: /\.s?css$/,
+            use: CSSExtract.extract({
             use: [
-                //MiniCssExtractPlugin.loader
-                'style-loader',{
+                //'style-loader',
+                {
                 loader: 'css-loader',
                 options: {
                     sourceMap: true
@@ -44,14 +35,12 @@ module.exports = (env)=> {
                     sourceMap: true
                 }
             }],
-
+            })
         }]
     },
-    // plugins: [
-    //     new MiniCssExtractPlugin({
-    //       filename: "styles.css",
-    //     })
-    //   ],
+    plugins: [
+        CSSExtract
+      ],
     devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {
         contentBase: path.join(__dirname, 'public'),

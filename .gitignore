@@ -3,7 +3,5 @@ playground/
 utils.js
 package-lock.json
 .DS_Store
-public/bundle.js
-public/bundle.js.map
-public/styles.css
-public/styles.css.map
+public/dist/
+src/redux-expesify\.js

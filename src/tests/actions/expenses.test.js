@@ -1,11 +1,22 @@
-import {startAddExpense, addExpense, removeExpense, editExpense} from '../../actions/expenses';
+import {startAddExpense, startSetExpenses, addExpense, removeExpense, editExpense, setExpenses} from '../../actions/expenses';
 import {testExpenses} from '../fixtures';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {database} from '../../firebase/firebase';
 
 //pass array of middleware we want to use
-const createMockStore = configureMockStore([thunk])
+const createMockStore = configureMockStore([thunk]);
+
+//don't finish each test until firebase has added our fresh test case data to the DB
+beforeEach((done)=> {
+    const expensesData = {};
+    testExpenses.forEach(({id,description,notes,amount,createdAt})=> {
+        expensesData[id] = { description, notes, amount, createdAt}
+    });
+    database.ref('expenses').set(expensesData).then(()=> {
+        done();
+    });
+});
 
 const testExpense={
     id: 'default',
@@ -111,5 +122,25 @@ test('should set up edit expense action object', ()=> {
         type: 'EDIT_EXPENSE',
         id: 'default',
         updates: {description: 'new description'}
+    })
+});
+
+test('should set up set expense action object with data ', ()=> {
+    const action = setExpenses(testExpenses);
+    expect(action).toEqual({
+        type: 'SET_EXPENSES',
+        expenses: testExpenses
+    });
+});
+
+test('should fetch expeneses from firebase', (done)=> {
+    const store = createMockStore({});
+    store.dispatch(startSetExpenses()).then(()=> {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'SET_EXPENSES',
+            expenses: testExpenses
+        });
+        done();
     })
 })

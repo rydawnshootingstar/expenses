@@ -6,7 +6,7 @@ import './styles/styles.scss';
 import configureStore from './store/configureStore';
 import AppRouter from './routers/AppRouter';
 import { setTextFilter } from './actions/filters';
-import { addExpense } from './actions/expenses';
+import { startSetExpenses } from './actions/expenses';
 import getVisibleExpenses from './selectors/expenses';
 import './firebase/firebase';
 
@@ -28,10 +28,10 @@ const jsx = (
     </Provider>
 );
 
-const renderApp = ()=> {
-    ReactDOM.render(jsx, appRoot);
-};
+//render this until our assets are all fetched from DB
+ReactDOM.render(<p>Loading...</p>, appRoot);
 
-//render method
-renderApp();
+store.dispatch(startSetExpenses()).then(()=> {
+    ReactDOM.render(jsx, appRoot);
+});
 

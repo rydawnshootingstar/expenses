@@ -112,3 +112,13 @@ test('should NOT edit an existing expense', ()=> {
         testExpenses[0],testExpenses[1],testExpenses[2],testExpenses[3]
     ])
 });
+
+//sets just 1 
+test('should set expenses', () => {
+    const action = {
+        type: 'SET_EXPENSES',
+        expenses: [testExpenses[1]]
+    }
+    const state = expensesReducer(testExpenses, action);
+    expect(state).toEqual([testExpenses[1]]);
+});

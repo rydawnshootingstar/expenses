@@ -19,6 +19,9 @@ export default (state=expensesReducerDefaultState, action)=> {
                     return expense;                             //no change unless our criteria matches
                 };
             });
+        //sets state to the array we pass in
+        case 'SET_EXPENSES':
+            return action.expenses;
 
         default:
             return state;

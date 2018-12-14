@@ -1,4 +1,4 @@
-import {startAddExpense, startSetExpenses, addExpense, removeExpense, editExpense, setExpenses} from '../../actions/expenses';
+import {startAddExpense, startSetExpenses, startRemoveExpense, addExpense, removeExpense, editExpense, setExpenses} from '../../actions/expenses';
 import {testExpenses} from '../fixtures';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -21,7 +21,7 @@ beforeEach((done)=> {
 const testExpense={
     id: 'default',
     description: 'default_description',
-    notes: '',
+    note: '',
     amount: '',
     createdAt: 'never'
 }
@@ -52,7 +52,7 @@ test('shoud add expense with data to database + store', (done)=> {
         description: 'aaa',
         amount: 600,
         createdAt: 98760987,
-        notes: 'noice'
+        note: 'noice'
     }
     //dispatch action, which writes to DB
     store.dispatch(startAddExpense(expenseData)).then(()=> {
@@ -86,7 +86,7 @@ test('shoud add default expense to database + store', (done)=> {
                 description: '',
                 amount: 0,
                 createdAt: 0,
-                notes: ''
+                note: ''
             }
         });
         //fetch thing we added from DB and return it to chain
@@ -96,7 +96,7 @@ test('shoud add default expense to database + store', (done)=> {
             description: '',
             amount: 0,
             createdAt: 0,
-            notes: ''
+            note: ''
         });
         done();
     });;
@@ -144,3 +144,19 @@ test('should fetch expeneses from firebase', (done)=> {
         done();
     })
 })
+
+test('should remove an expense from firebase', (done)=> {
+    const store = createMockStore({});
+    const id = testExpenses[2].id;
+    store.dispatch(startRemoveExpense({id})).then(()=> {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'REMOVE_EXPENSE',
+            id: id
+        });
+        return database.ref(`expenses/${id}`).once('value');
+    }).then((snapshot)=> {
+        expect(snapshot.val()).toBeNull;
+        done();
+    });
+});

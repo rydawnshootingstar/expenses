@@ -10,7 +10,6 @@ import { startSetExpenses } from './actions/expenses';
 import getVisibleExpenses from './selectors/expenses';
 import './firebase/firebase';
 
-
 const store = configureStore();
 
 // store.subscribe(()=> {
@@ -29,7 +28,7 @@ const jsx = (
 );
 
 //render this until our assets are all fetched from DB
-ReactDOM.render(<p>Loading...</p>, appRoot);
+ReactDOM.render(<img src ="/images/baby.gif" alt="loading..."></img>, appRoot);
 
 store.dispatch(startSetExpenses()).then(()=> {
     ReactDOM.render(jsx, appRoot);

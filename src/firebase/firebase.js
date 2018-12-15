@@ -13,8 +13,10 @@ firebase.initializeApp(config);
 
 const database = firebase.database();
 
+//google login
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 const expenseDB = database.ref('expenses');
 
-export {firebase, database, expenseDB as default};
+export {firebase, googleProvider, database, expenseDB as default};
 

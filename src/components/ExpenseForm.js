@@ -101,7 +101,7 @@ export default class ExpenseForm extends React.Component {
                     >
                     </textarea>
 
-                    <button>Add Expense</button>
+                    <button>{this.props.buttonText ? this.props.buttonText : 'Add Expense'}</button>
                 </form>
             </div>
         );  

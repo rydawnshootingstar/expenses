@@ -9,14 +9,9 @@ import { login, logout } from './actions/auth';
 import { startSetExpenses } from './actions/expenses';
 import getVisibleExpenses from './selectors/expenses';
 import {firebase} from './firebase/firebase';
+import LoadingPage from './components/LoadingPage';
 
 const store = configureStore();
-
-// store.subscribe(()=> {
-//     const state = store.getState();
-//     const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
-//     console.log(visibleExpenses);
-// });
 
 var appRoot = document.getElementById('words');
 
@@ -36,11 +31,8 @@ const renderApp = ()=>{
 };
 
 //render this until our assets are all fetched from DB
-ReactDOM.render(<img src ="/images/baby.gif" alt="loading..." className="center-image"></img>, appRoot);
+ReactDOM.render(<LoadingPage />, appRoot);
 
-// store.dispatch(startSetExpenses()).then(()=> {
-//     ReactDOM.render(jsx, appRoot);
-// });
 
 //runs when user's authentication state changes
 firebase.auth().onAuthStateChanged((user)=> {

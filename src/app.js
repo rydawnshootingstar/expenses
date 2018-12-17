@@ -36,7 +36,7 @@ const renderApp = ()=>{
 };
 
 //render this until our assets are all fetched from DB
-ReactDOM.render(<img src ="/images/baby.gif" alt="loading..."></img>, appRoot);
+ReactDOM.render(<img src ="/images/baby.gif" alt="loading..." className="center-image"></img>, appRoot);
 
 // store.dispatch(startSetExpenses()).then(()=> {
 //     ReactDOM.render(jsx, appRoot);
